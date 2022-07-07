@@ -18,7 +18,14 @@ Data for each of these dimensions is being indexed to 2019, and comes from vario
 
 The specific link or agency used to collect each of these measures is outlined below:
 
+### Citations
 
+State level eviction filing data made possible through the Eviction Lab:
+
+Ashley Gromis, Ian Fellows, James R. Hendrickson, Lavar Edmonds, Lillian Leung, Adam Porton,
+and Matthew Desmond. Estimating Eviction Prevalence across the United States. Princeton
+University Eviction Lab. https://data-downloads.evictionlab.org/#estimating-eviction-prevalanceacross-
+us/. Deposited May 13, 2022.
 
 ## Modeling Approach
 
