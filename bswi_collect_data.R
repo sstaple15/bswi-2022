@@ -2,7 +2,7 @@
 # Goal:    Collect BSWI Socio-economic indicators
 # Author:  Stephen Stapleton
 # Created: 2022-07-01
-# Updated: 2022-07-07
+# Updated: 2022-07-18
 ###########################################################################
 
 # data source links:
@@ -85,6 +85,10 @@ bea_gdp <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_co
   select( -government_only ) %>%
   rename( gdp_millions = 'all_industries' )
 
+unemploy <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bls_unemployment_2019.csv")
+
+union <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bls_unionization_2020.csv")
+
 #--------------------------------------------------------------------------
 # collect other model attributes
 
@@ -123,6 +127,8 @@ bswi %<>%
   left_join( evictions, by = 'state' ) %>%
   left_join( foodsecure, by = 'state_abbrev' ) %>%
   left_join( infantmort, by = c('state_abbrev' = 'state') ) %>%
+  left_join( unemploy, by = 'state' ) %>%
+  left_join( union, by = 'state' ) %>%
   
   # create remaining vars of interest
   mutate( filings_by_renting = filings_estimate / renting_hh,
@@ -135,10 +141,11 @@ bswi %<>%
           
           # dependent vars
           median_hhld_income, below_100_fpl, filings_by_renting,
-          filings_by_total, gdp_per_capita, food_scarce, infantmort,
+          filings_by_total, gdp_per_capita, food_scarce,
+          infantmort, unemp_rate, union_rate,
           
           # control vars
           eth_afram, eth_latinx, bea_region, gov_share_gdp, gdp_millions )
 
 # clean up
-rm( acs.dem, acs.ind, acs.vars, bea_gdp, evictions, foodsecure, infantmort )
+rm( acs.dem, acs.ind, acs.vars, bea_gdp, evictions, foodsecure, infantmort, unemploy, union )
