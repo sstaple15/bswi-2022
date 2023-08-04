@@ -1,0 +1,79 @@
+"Notes"	"State"	"State Code"	Deaths	Births	Death Rate
+	"Alabama"	"01"	403	57647	6.99
+	"Alaska"	"02"	48	9469	5.07
+	"Arizona"	"04"	399	76947	5.19
+	"Arkansas"	"05"	260	35251	7.38
+	"California"	"06"	1648	420259	3.92
+	"Colorado"	"08"	295	61494	4.80
+	"Connecticut"	"09"	145	33460	4.33
+	"Delaware"	"10"	53	10392	5.10
+	"District of Columbia"	"11"	46	8874	5.18
+	"Florida"	"12"	1217	209671	5.80
+	"Georgia"	"13"	769	122473	6.28
+	"Hawaii"	"15"	77	15785	4.88
+	"Idaho"	"16"	109	21533	5.06
+	"Illinois"	"17"	733	133298	5.50
+	"Indiana"	"18"	531	78616	6.75
+	"Iowa"	"19"	160	36114	4.43
+	"Kansas"	"20"	227	34376	6.60
+	"Kentucky"	"21"	332	51668	6.43
+	"Louisiana"	"22"	435	57328	7.59
+	"Maine"	"23"	73	11539	6.33
+	"Maryland"	"24"	393	68554	5.73
+	"Massachusetts"	"25"	262	66428	3.94
+	"Michigan"	"26"	708	104074	6.80
+	"Minnesota"	"27"	262	63443	4.13
+	"Mississippi"	"28"	288	35473	8.12
+	"Missouri"	"29"	408	69285	5.89
+	"Montana"	"30"	54	10791	5.00
+	"Nebraska"	"31"	138	24291	5.68
+	"Nevada"	"32"	156	33653	4.64
+	"New Hampshire"	"33"	52	11791	4.41
+	"New Jersey"	"34"	392	97954	4.00
+	"New Mexico"	"35"	116	21903	5.30
+	"New York"	"36"	855	209338	4.08
+	"North Carolina"	"37"	790	116730	6.77
+	"North Dakota"	"38"	55	10059	5.47
+	"Ohio"	"39"	865	129191	6.70
+	"Oklahoma"	"40"	281	47623	5.90
+	"Oregon"	"41"	168	39820	4.22
+	"Pennsylvania"	"42"	729	130693	5.58
+	"Rhode Island"	"44"	40	10101	3.96
+	"South Carolina"	"45"	370	55704	6.64
+	"South Dakota"	"46"	80	10960	7.30
+	"Tennessee"	"47"	502	78689	6.38
+	"Texas"	"48"	1946	368190	5.29
+	"Utah"	"49"	248	45702	5.43
+	"Vermont"	"50"	18	5133	3.51 (Unreliable)
+	"Virginia"	"51"	546	94749	5.76
+	"Washington"	"53"	375	83086	4.51
+	"West Virginia"	"54"	127	17323	7.33
+	"Wisconsin"	"55"	360	60594	5.94
+	"Wyoming"	"56"	32	6128	5.22
+"Total"			19578	3613647	5.42
+"---"
+"Dataset: Linked Birth / Infant Death Records, 2017-2020 Expanded"
+"Query Parameters:"
+"Year of Death: 2020"
+"Group By: State"
+"Show Totals: True"
+"Show Zero Values: False"
+"Show Suppressed: False"
+"Calculate Rates Per: 1,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/lbd-expanded.html for more information."
+"---"
+"Query Date: Aug 4, 2023 5:23:25 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. National Vital Statistics"
+"System, Linked Birth / Infant Deaths on CDC WONDER Online Database. Data are from the Linked Birth / Infant Deaths Records"
+"2017-2020, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/lbd-current-expanded.html on Aug 4, 2023 5:23:25 PM"
+"---"
+Caveats:
+"1. 'Unreliable' appears for rates when there are fewer than 20 deaths in the numerator. This is because the figure does not meet"
+"the NCHS standard of reliability or precision. More information: http://wonder.cdc.gov/wonder/help/lbd-expanded.html#Unreliable."
+"2. Infant deaths are weighted so numbers may not exactly add to totals due to rounding. More information:"
+"http://wonder.cdc.gov/wonder/help/lbd-expanded.html#WeightFactors-Totals."
+"3. Note that there may be slight differences in the number of infant deaths when comparing the Linked Birth / Death Records to"
+"the other vital statistics. More information: http://wonder.cdc.gov/wonder/help/lbd-expanded.html#Weight Factors."

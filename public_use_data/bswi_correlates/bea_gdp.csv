@@ -1,0 +1,103 @@
+fips,state,Description,q1_2019,q2_2019,q3_2019,q4_2019,bea_region
+1,Alabama,all_industries,228446.2,230428.6,232224.7,233587.9,south
+1,Alabama,government_only,36872,37237.5,37870.4,38033.7,south
+2,Alaska,all_industries,54068.9,54236.4,54802.8,55080.3,west
+2,Alaska,government_only,11398.6,11379.8,11404.6,11454.6,west
+4,Arizona,all_industries,361237.3,366861.1,373610.5,378243.9,west
+4,Arizona,government_only,43944.6,44248.6,45003.3,45310.3,west
+5,Arkansas,all_industries,129040.8,129954.3,131427.8,132936.6,south
+5,Arkansas,government_only,16735.3,16741.4,16968.3,17004.7,south
+6,California,all_industries,2981815.4,3045351.6,3072533.7,3110880.2,west
+6,California,government_only,340025.9,346077.9,346989.8,354221.2,west
+8,Colorado,all_industries,382449.7,390227.5,397140.6,399054.1,west
+8,Colorado,government_only,46325.1,46797.8,47671.8,48249.4,west
+9,Connecticut,all_industries,285144.6,287949.6,289234.2,290108,northeast
+9,Connecticut,government_only,27271.7,27428.2,27678.9,27389.4,northeast
+10,Delaware,all_industries,75399.3,76794.5,77620.6,78354.3,northeast
+10,Delaware,government_only,7659.2,7597.6,7815.3,7728.3,northeast
+11,District of Columbia,all_industries,141915.2,143276.4,145209.4,147221.7,south
+11,District of Columbia,government_only,46443.9,46587.3,47100.9,47165.9,south
+12,Florida,all_industries,1096605.1,1110451.4,1123989.9,1134695.4,south
+12,Florida,government_only,113280,113720.7,115424.2,116546.1,south
+13,Georgia,all_industries,623183.3,637259.7,643694,647057.8,south
+13,Georgia,government_only,69637.6,69715.3,70959.7,71995,south
+15,Hawaii,all_industries,90586.9,91314.8,92627.5,92595.3,west
+15,Hawaii,government_only,18176.3,18166.5,18294.1,18392.6,west
+16,Idaho,all_industries,80531.4,81815.3,83080.5,84253.3,west
+16,Idaho,government_only,10476.2,10565.1,10646.8,10759.8,west
+17,Illinois,all_industries,881148.3,887825.7,895410.5,897559.8,midwest
+17,Illinois,government_only,83392.2,83915.5,85960.7,85240.9,midwest
+18,Indiana,all_industries,375794.3,380255.8,382316.6,385714.6,midwest
+18,Indiana,government_only,35967.6,35995,36649.7,37270.2,midwest
+19,Iowa,all_industries,189896.3,192396.1,196365.1,198632.9,midwest
+19,Iowa,government_only,22515.5,22705,22918.5,23032.1,midwest
+20,Kansas,all_industries,173097.8,175952,177770.6,180133.6,midwest
+20,Kansas,government_only,22250.8,22334.7,22732.8,22772.4,midwest
+21,Kentucky,all_industries,212381.8,215349.8,217093.6,219581,south
+21,Kentucky,government_only,28365.4,28653.1,28792.5,28952.2,south
+22,Louisiana,all_industries,255074.6,254163.4,254161.7,254848.4,south
+22,Louisiana,government_only,28993.3,29070.4,29396.4,29579.8,south
+23,Maine,all_industries,67202.4,67823,68867.7,69918.6,northeast
+23,Maine,government_only,8792.1,8832.5,8828,9046.5,northeast
+24,Maryland,all_industries,415750.1,421277.5,423870.5,425539.8,south
+24,Maryland,government_only,84217.2,84915,85659.1,86832.8,south
+25,Massachusetts,all_industries,582565.6,591060.1,598503.3,600897.8,northeast
+25,Massachusetts,government_only,57091.8,57158.7,57828.2,57597.9,northeast
+26,Michigan,all_industries,524398.4,531034.3,534448.1,535857.6,midwest
+26,Michigan,government_only,54489,54508.8,55229.9,55506.1,midwest
+27,Minnesota,all_industries,376909.5,381675.4,385454.8,388118.9,midwest
+27,Minnesota,government_only,36109.2,36359.3,36946.3,36828.4,midwest
+28,Mississippi,all_industries,113080.2,113828.9,115160.1,116866.1,south
+28,Mississippi,government_only,19986.3,20056,20369.6,20571,south
+29,Missouri,all_industries,326873.1,330222.9,334265.8,337729.7,midwest
+29,Missouri,government_only,38283.5,38438.8,38763.4,39032.9,midwest
+30,Montana,all_industries,51215.7,51293,51962.9,52685.7,west
+30,Montana,government_only,7503.4,7520.8,7586.8,7740.5,west
+31,Nebraska,all_industries,128247.7,129735.1,132207.4,135219.5,midwest
+31,Nebraska,government_only,15989.6,16086.3,16197.3,16572.5,midwest
+32,Nevada,all_industries,177950.9,180388.7,183237.8,185395.9,west
+32,Nevada,government_only,18721.2,18679.8,18875.6,19297.3,west
+33,New Hampshire,all_industries,86641.3,87289.3,87825.2,88274.7,northeast
+33,New Hampshire,government_only,9035.1,8976,9167.6,9005.5,northeast
+34,New Jersey,all_industries,628060,637698.3,644714.2,647274.3,northeast
+34,New Jersey,government_only,65617.2,65497.5,66593.1,66058.9,northeast
+35,New Mexico,all_industries,99290.9,101026.8,103094.3,104474.1,west
+35,New Mexico,government_only,23663.6,23777.6,24406,24658.9,west
+36,New York,all_industries,1743071.6,1780397.3,1787251.2,1800287,northeast
+36,New York,government_only,180711.8,182998.8,183612.9,184566.6,northeast
+37,North Carolina,all_industries,584580.8,593495.8,599133.6,605411.3,south
+37,North Carolina,government_only,75795,76198.6,76646.2,77327.1,south
+38,North Dakota,all_industries,58130.8,58946.3,59079.6,59861.5,midwest
+38,North Dakota,government_only,6524.5,6607.2,6654.8,6708.6,midwest
+39,Ohio,all_industries,682506,690813.3,697422.2,702055.7,midwest
+39,Ohio,government_only,73513.6,74019.6,74435.9,75752.1,midwest
+40,Oklahoma,all_industries,202821.9,202936.8,203957.5,205082.8,south
+40,Oklahoma,government_only,31894.2,32174.4,32620.6,33231.4,south
+41,Oregon,all_industries,242379.3,244631.6,247977,251600.3,west
+41,Oregon,government_only,31413.8,31693,31970.2,32561,west
+42,Pennsylvania,all_industries,786663.4,797421.2,804278.7,810381.5,northeast
+42,Pennsylvania,government_only,76103,76392.3,77163.5,77832.9,northeast
+44,Rhode Island,all_industries,60573.3,61300.4,61325.8,62076.8,northeast
+44,Rhode Island,government_only,8376,8470.5,8631.1,8726.7,northeast
+45,South Carolina,all_industries,241080.5,242294.6,246017.9,249256.2,south
+45,South Carolina,government_only,35738,36127.5,36754.3,37611.1,south
+46,South Dakota,all_industries,53411.2,53535.4,54180.2,54632.7,midwest
+46,South Dakota,government_only,6025.2,6052.7,6102.7,6184.2,midwest
+47,Tennessee,all_industries,370314.4,374825.8,379716.9,382808.8,south
+47,Tennessee,government_only,40462.5,40535.1,40964.5,40921.5,south
+48,Texas,all_industries,1835120.8,1852549.4,1874518.1,1893627.1,south
+48,Texas,government_only,190234.5,190776.8,193923.2,198756.4,south
+49,Utah,all_industries,192061.2,192305.5,196664.6,199322.3,west
+49,Utah,government_only,22231.3,22460.5,22844.6,23209.9,west
+50,Vermont,all_industries,33858.4,33757.1,34336.6,34557.9,northeast
+50,Vermont,government_only,4823.4,4849.5,4894.9,4909.8,northeast
+51,Virginia,all_industries,545411.3,549599.4,559179.7,563032.9,south
+51,Virginia,government_only,96503.4,96318.5,99040.9,99108,south
+53,Washington,all_industries,587498.6,592864.5,601300.8,609831.1,west
+53,Washington,government_only,74029.7,74143.7,75027.9,75577.3,west
+54,West Virginia,all_industries,78340,79117.6,79426.9,79674.2,south
+54,West Virginia,government_only,12267.3,12309.8,12668.4,12735.6,south
+55,Wisconsin,all_industries,339086.3,343887.7,345946.5,349978.8,midwest
+55,Wisconsin,government_only,36114,36815.6,36806,37256.8,midwest
+56,Wyoming,all_industries,38936.4,39252,39672.4,40542.6,west
+56,Wyoming,government_only,6458.7,6432.7,6508.1,6583,west

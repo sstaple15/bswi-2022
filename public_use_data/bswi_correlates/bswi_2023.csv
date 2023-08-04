@@ -1,0 +1,53 @@
+﻿state,state_abbrev,main_index,main_rank,wage_index,work_index,org_index
+Alabama,AL,14.35,47,7.76,25,10
+Alaska,AK,44.79,23,60.93,22.62,50
+Arizona,AZ,55.55,18,72.22,33.33,60
+Arkansas,AR,24.65,38,38.72,19.05,10
+California,CA,83.51,1,77.52,78.57,100
+Colorado,CO,69.63,9,70.96,53.57,90
+Connecticut,CT,71.28,8,75.09,60.71,80
+Delaware,DE,51.55,21,44.51,28.57,95
+District of Columbia,DC,79.13,3,86.37,55.95,100
+Florida,FL,38.36,30,38.6,22.62,60
+Georgia,GA,11.57,49,12.25,19.05,0
+Hawaii,HI,60.16,16,56.64,42.86,90
+Idaho,ID,22.29,43,14.05,26.19,30
+Illinois,IL,69.4,10,61,60.71,95
+Indiana,IN,26.77,35,6.52,26.19,60
+Iowa,IA,28.46,33,26.37,22.62,40
+Kansas,KS,21.32,44,11.62,19.05,40
+Kentucky,KY,23.35,39,16.71,19.05,40
+Louisiana,LA,23.26,40,15.44,27.38,30
+Maine,ME,64.05,12,75.74,39.29,80
+Maryland,MD,61.11,13,62.14,46.43,80
+Massachusetts,MA,73.05,6,73.25,60.71,90
+Michigan,MI,43.52,26,44.22,30.95,60
+Minnesota,MN,60.78,14,52.98,48.81,90
+Mississippi,MS,8.66,51,9.15,0,20
+Missouri,MO,36.51,31,43.35,19.05,50
+Montana,MT,44.53,24,54.03,22.62,60
+Nebraska,NE,43.57,25,41.2,27.38,70
+Nevada,NV,52.46,20,53.01,39.29,70
+New Hampshire,NH,43.17,27,24.58,38.1,80
+New Jersey,NJ,71.73,7,69.95,60.71,90
+New Mexico,NM,58.39,17,60.56,40.48,80
+New York,NY,75.74,4,70.6,64.29,100
+North Carolina,NC,5.07,52,5.39,8.33,0
+North Dakota,ND,22.88,41,21.79,19.05,30
+Ohio,OH,50.3,22,43.45,26.19,95
+Oklahoma,OK,22.56,42,11.6,29.76,30
+Oregon,OR,83.02,2,70.05,85.71,100
+Pennsylvania,PA,34.74,32,17.07,22.62,80
+Puerto Rico,PR,54.96,19,34.27,60.71,80
+Rhode Island,RI,60.28,15,56.94,50,80
+South Carolina,SC,10.15,50,8.71,19.05,0
+South Dakota,SD,42.79,28,62.18,22.62,40
+Tennessee,TN,18.1,45,9.83,19.05,30
+Texas,TX,12.2,48,13.85,19.05,0
+Utah,UT,16.12,46,8.02,22.62,20
+Vermont,VT,65.73,11,70.58,42.86,90
+Virginia,VA,42.39,29,35.15,34.52,65
+Washington,WA,75.33,5,82.08,64.29,80
+West Virginia,WV,28.26,34,38.35,22.62,20
+Wisconsin,WI,26.54,36,21.57,22.62,40
+Wyoming,WY,26.19,37,23.82,19.05,40
