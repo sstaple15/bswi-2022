@@ -1,20 +1,25 @@
 ###########################################################################
-# Goal:    Collect BSWI Socio-economic indicators
+# Goal:    Collect BSWI Socioeconomic indicators
 # Author:  Stephen Stapleton
-# Created: 2022-07-01
-# Updated: 2022-07-18
+# Created: 2022-07-26
+# Updated: 2023-08-04
 ###########################################################################
 
 # data source links:
-# evictions: https://eviction-lab-data-downloads.s3.amazonaws.com/estimating-eviction-prevalance-across-us/state_eviction_estimates_2000_2018.csv
-# infant mortality: blob:https://www.cdc.gov/1c017f24-7c51-4f52-b162-25e4ffcca7a4
-# food security: https://www.ers.usda.gov/media/rbmpu1zi/mapdata2020.xlsx
-# GDP and gov GDP: https://apps.bea.gov/itable/iTable.cfm?ReqID=70&step=1
+# median household income: tidycensus API
+# food insecurity: https://www.ers.usda.gov/media/rbmpu1zi/mapdata2021.xlsx
+# poverty: tidycensus API
+# GDP per capita: https://www.bea.gov/sites/default/files/2023-06/stgdppi1q23.xlsx
+# unemployment: tidycensus API
+# unionization: https://unionstats.com/state/xls/state_2022.xlsx
+
+# NOTE: REQUIRES DOWNLOAD:
+# infant mortality: https://wonder.cdc.gov/ 
 
 # origin ->
 
 # Steps of this script:
-# (1) collect data from Census API/local file
+# (1) collect data from Census API/local files
 # (2) pull most recent BSWI index score data
 # (3) consolidate into single state-level dataframe
 
@@ -24,7 +29,7 @@
 # setup
 
 # check for packages
-list.packages <- c('tidyverse', 'tidycensus', 'magrittr', 'here')
+list.packages <- c('tidyverse', 'tidycensus', 'magrittr', 'here', 'openxlsx')
 new.packages  <- list.packages[!( list.packages %in% installed.packages()[, 'Package'] )]
 
 # install if not currently
@@ -39,61 +44,87 @@ lapply(list.packages, require, character.only = T); rm(list.packages) # load int
 # collect Census API data for correlates
 
 # check variable names to pull
-acs.vars <- load_variables( 2019, 'acs5' )
+acs.vars <- load_variables( 2021, 'acs5' )
 
 acs.ind <- get_acs( geography = 'state',
-                    year = 2019,
+                    year = 2021,
                     variables = c('median_hhld_income' = 'B06011_001',
                                   'below_100_fpl' = 'B06012_002',
-                                  'fpl_total' = 'B06012_001') ) %>%
+                                  'fpl_total' = 'B06012_001',
+                                  'lf_total' = 'B23025_003',
+                                  'unemployed' = 'B23025_005') ) %>%
   
   # pivot data
   select( -moe ) %>%
   pivot_wider( names_from = 'variable',
                values_from = 'estimate' ) %>%
-  
+
   # format variables
-  mutate( below_100_fpl = below_100_fpl / fpl_total ) %>%
+  mutate( below_100_fpl = below_100_fpl / fpl_total,
+          unemployed = unemployed / lf_total ) %>%
   
   # rename
-  rename_all( tolower )
+  rename_all( tolower ); rm( acs.vars )
+
+#--------------------------------------------------------------------------
+# collect other API data
+
+# food insecurity
+foodsecure <- read.xlsx('https://www.ers.usda.gov/media/rbmpu1zi/mapdata2021.xlsx',
+                        startRow = 6,
+                        colNames = F )
+colnames(foodsecure) <- c('state_abbrev', 'hhlds_1921', 'interviewed',
+                          'pct_loworless', 'V1', 'V2', 'pct_verylow', 'V3', 'V4')
+foodsecure %<>%
+  select( -starts_with('V') ) %>%
+  mutate_at( vars('pct_loworless', 'pct_verylow'), function(x) x / 100 ) %>%
+  filter( !grepl('\\.', state_abbrev) ) %>%
+  select( state_abbrev, pct_loworless, pct_verylow )
+
+# GDP per capita
+bea.gdp <- read.xlsx('https://www.bea.gov/sites/default/files/2023-06/stgdppi1q23.xlsx',
+                     startRow = 7,
+                     colNames = F,
+                     rows = c(1:66))[ , c(1,3) ]
+colnames(bea.gdp) <- c('state', 'gdp_22' )
+
+bea.gdp %<>%
+  mutate_at( vars(state), trimws ) %>%
+  mutate_at( vars(gdp_22), function(x) x * 1000000 )
+
+bea.gdp %<>%
+  
+  # collect total population to produce gdp/capita
+  left_join( acs.ind %>%
+               select( state = name, pop = fpl_total) ) %>%
+  mutate( gdp_pc_22 = gdp_22 / pop ) %>%
+  na.omit( )
+
+# unionization
+unionized <- read.xlsx('https://unionstats.com/state/xls/state_2022.xlsx',
+                       startRow = 2,
+                       rows = seq(1, 258) )[ c(2:3, 5:9)]
+colnames(unionized) <- c('state', 'sector', 'emp_1000', 'mem_1000',
+                         'cov_1000', 'pct_member', 'pct_covered')
+
+unionized %<>%
+  filter( sector == 'Total' ) %>%
+  select( -sector )
 
 #--------------------------------------------------------------------------
 # collect locally saved data
 
-evictions <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/evictionlab_state_eviction_estimates_2000_2018.csv") %>%
-  filter( year == 2018 ) %>%
-  select( state, FIPS_state, filings_estimate, renting_hh )
+infant <- read_delim( 'public_use_data/bswi_correlates/infant_mortality_2017-2020.txt' )[ c(1:51), c(2:6) ]
+colnames(infant) <- c('state', 'state_code', 'deaths', 'births', 'rate_1000')
 
-infantmort <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/cdc_infant_mortality_estimates.csv") %>%
-  filter( YEAR == 2019 ) %>%
-  rename_all( tolower ) %>%
-  mutate( infantmort = as.numeric(rate)/100 ) %>%
-  select( state, infantmort )
-  
-foodsecure <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/usda_food_scarcity.csv") %>%
-  mutate( food_scarce = food_scarce_est / 100 ) %>%
-  select( state_abbrev, food_scarce ) %>%
-  filter( !is.na(state_abbrev) )
-
-bea_gdp <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bea_gdp.csv") %>%
-  mutate( gdp = ( q1_2019 + q2_2019 + q3_2019 + q4_2019 ) / 4 ) %>%
-  rename_all( tolower ) %>%
-  select( fips, state, description, gdp, bea_region ) %>%
-  pivot_wider( names_from = 'description', values_from = gdp ) %>%
-  mutate( gov_share_gdp = government_only / all_industries ) %>%
-  select( -government_only ) %>%
-  rename( gdp_millions = 'all_industries' )
-
-unemploy <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bls_unemployment_2019.csv")
-
-union <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bls_unionization_2020.csv")
+infant %<>%
+  mutate_at( vars(rate_1000), parse_number )
 
 #--------------------------------------------------------------------------
 # collect other model attributes
 
 acs.dem <- get_acs( geography = 'state',
-                    year = 2019,
+                    year = 2021,
                     variables = c('eth_total' = 'B03002_001',
                                   'eth_latinx' = 'B03002_012',
                                   'eth_afram' = 'B03002_004') ) %>%
@@ -110,10 +141,14 @@ acs.dem <- get_acs( geography = 'state',
   # rename
   rename_all( tolower )
 
+bea.reg <- read_csv("public_use_data/bswi_correlates/bea_gdp.csv") %>%
+  select( state, bea_region ) %>%
+  distinct( )
+
 #--------------------------------------------------------------------------
 # collect bswi 2022 index scores
 
-bswi <- read_csv("/projects/sstapleton/min_wage_fight/public_use_data/bswi_correlates/bswi_2022_scores.csv")
+bswi <- read_csv("public_use_data/bswi_correlates/bswi_2023.csv")
 
 #--------------------------------------------------------------------------
 # reconcile into single dataframe
@@ -123,29 +158,27 @@ bswi %<>%
   # join in all data
   left_join( acs.dem, by = c('state' = 'name') ) %>%
   left_join( acs.ind, by = c('state' = 'name') ) %>%
-  left_join( bea_gdp, by = 'state' ) %>%
-  left_join( evictions, by = 'state' ) %>%
+  left_join( bea.gdp, by = 'state' ) %>%
   left_join( foodsecure, by = 'state_abbrev' ) %>%
-  left_join( infantmort, by = c('state_abbrev' = 'state') ) %>%
-  left_join( unemploy, by = 'state' ) %>%
-  left_join( union, by = 'state' ) %>%
-  
-  # create remaining vars of interest
-  mutate( filings_by_renting = filings_estimate / renting_hh,
-          filings_by_total   = filings_estimate / fpl_total,
-          gdp_per_capita     = gdp_millions * 1000000 / fpl_total ) %>%
+  left_join( infant, by = 'state' ) %>%
+  left_join( unionized, by = 'state' ) %>%
+  left_join( bea.reg, by = 'state' ) %>%
   
   # do some col cleanup
-  select( geoid.x, state, state_abbrev, # primary key
-          bswi_2022,                    # independent var
+  select( fips = geoid.x, state, state_abbrev, # primary key
+          main_index:org_index,                # independent vars
           
           # dependent vars
-          median_hhld_income, below_100_fpl, filings_by_renting,
-          filings_by_total, gdp_per_capita, food_scarce,
-          infantmort, unemp_rate, union_rate,
+          median_hhld_income,
+          below_100_fpl,
+          gdp_pc = gdp_pc_22,
+          foodscarce = pct_loworless,
+          union = pct_member,
+          infantmort = rate_1000,
+          unemployed,
           
           # control vars
-          eth_afram, eth_latinx, bea_region, gov_share_gdp, gdp_millions )
+          eth_afram, eth_latinx, gdp_22, bea_region )
 
 # clean up
-rm( acs.dem, acs.ind, acs.vars, bea_gdp, evictions, foodsecure, infantmort, unemploy, union )
+rm( acs.dem, acs.ind, bea.gdp, foodsecure, infant, unionized, bea.reg )

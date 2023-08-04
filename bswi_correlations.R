@@ -2,7 +2,7 @@
 # Goal:    Conduct BSWI correlations
 # Author:  Stephen Stapleton
 # Created: 2022-07-01
-# Updated: 2022-07-18
+# Updated: 2023-08-04
 ###########################################################################
 
 # bswi_collect_data.R ->
@@ -22,12 +22,6 @@
 list.packages <- c('tidyverse', 'tidycensus', 'magrittr', 'here')
 new.packages  <- list.packages[!( list.packages %in% installed.packages()[, 'Package'] )]
 
-# install if not currently
-if(length(new.packages)) { install.packages(new.packages);
-  if(grepl('pewmethods', new.packages)) { # exception for git-only packages
-    if(!( 'devtools' %in% installed.packages()[, 'Package'] )) { install.packages('devtools') }
-    require(devtools); install_github("pewresearch/pewmethods") } }; rm(new.packages) 
-
 lapply(list.packages, require, character.only = T); rm(list.packages) # load into environment
 
 # set oxfam color defaults
@@ -37,8 +31,8 @@ oxfam_colors <- c('#61A534', '#0C884A', '#E70052')
 # create models and store output
 
 # create list of outcome variables
-outcomes <- c('median_hhld_income', 'below_100_fpl', 'filings_by_renting',
-              'filings_by_total', 'food_scarce', 'infantmort', 'unemp_rate', 'union_rate')
+outcomes <- c('median_hhld_income', 'below_100_fpl', 'gdp_pc',
+              'foodscarce', 'union', 'infantmort', 'unemployed')
 
 # create list to store results
 output.list <- list( base_model = list(),
@@ -49,7 +43,7 @@ output.list <- list( base_model = list(),
 for ( var in outcomes ) {
   
   # conduct correlation test
-  temp <- summary( lm( formula = paste( var, '~ bswi_2022' ),
+  temp <- summary( lm( formula = paste( var, '~ main_index' ),
                        data = bswi ) )
   
   # save in list of outputs
@@ -61,7 +55,7 @@ for ( var in outcomes ) {
 for ( var in outcomes ) {
   
   # conduct correlation test
-  temp <- summary( lm( formula = paste( var, '~ bswi_2022 + eth_afram + eth_latinx + gov_share_gdp' ),
+  temp <- summary( lm( formula = paste( var, '~ main_index + eth_afram + eth_latinx' ),
                        data = bswi ) )
   
   # save in list of outputs
@@ -73,7 +67,7 @@ for ( var in outcomes ) {
 for ( var in outcomes ) {
   
   # conduct correlation test
-  temp <- summary( lm( formula = paste( var, '~ bswi_2022 + eth_afram + eth_latinx + gov_share_gdp + gdp_millions + as.factor(bea_region)' ),
+  temp <- summary( lm( formula = paste( var, '~ main_index + eth_afram + eth_latinx + gdp_22 + as.factor(bea_region)' ),
                        data = bswi ) )
   
   # save in list of outputs
@@ -121,9 +115,8 @@ colnames(lm.table) <- c('base_coef', 'x1', 'x2', 'base_pval',
                         'ctrl_coef', 'x2', 'x3', 'ctrl_pval',
                         'rbst_coef', 'x4', 'x5', 'rbst_pval')
 # make rows readable
-rownames(lm.table) <- c('Median Household Income (USD)', 'Below 100% FPL', 'Eviction Filings Among Renters',
-                        'Eviction Filings Among Total', 'Food Scarcity', 'Infant Mortality', 'Unemployment Rate',
-                        'Unionization Rate')
+rownames(lm.table) <- c('Median Household Income (USD)', 'Below 100% FPL', 'GDP per Capita',
+                        'Food Scarcity', 'Unionization Rate', 'Infant Mortality', 'Unemployment Rate')
 lm.table %<>% select( !contains('x') )
 
 # helper function for significance stars
@@ -149,7 +142,7 @@ lm.table %<>%
              function(x) round(x, 3) )
 
 colnames(lm.table) <- rep(c('Coefficient', 'p-value'), 3)
-lm.table[c(1, 2, 5, 6, 8), ] %>%
+lm.table %>%
   knitr::kable() %>%
   kableExtra::add_header_above( c('Base Model' = 2, 'Control Model' = 2, 'Robust Model' = 3) ) %>%
   kableExtra::kable_styling()
@@ -158,9 +151,9 @@ lm.table[c(1, 2, 5, 6, 8), ] %>%
 # present base model output in visuals
 
 outcomes.nice <- c('Median Household Income (USD)', 'Percent (%) Below 100% FPL',
-                   'Percent (%) Filings by Renters', 'Percent (%) Filings by Total',
-                   'Percent (%) Food Scarce', 'Percent (%) Infant Mortality',
-                   'Percent (%) Unemployed', 'Percent (%) Union Participation')
+                   'GDP per Capita (USD)', 'Percent (%) Food Scarce',
+                   'Percent (%) Union Participation', 'Percent (%) Infant Mortality',
+                   'Percent (%) Unemployed')
 
 visual.list <- list()
 
@@ -169,7 +162,7 @@ i = 1
 while ( i <= length(outcomes) ) {
   
   visual.list[[ outcomes[[i]] ]] <- bswi %>%
-    ggplot( aes_string( x = 'bswi_2022', y = outcomes[[i]] ) ) +
+    ggplot( aes_string( x = 'main_index', y = outcomes[[i]] ) ) +
     geom_point( color = oxfam_colors[1],
                 fill = 'white',
                 shape = 1,
@@ -177,15 +170,15 @@ while ( i <= length(outcomes) ) {
                 size = 5 ) +
     
     # geom_smooth( method = lm, color = oxfam_colors[3], se = F ) +
-    geom_line( data = fortify( lm( paste0(outcomes[[i]], '~ bswi_2022'), data = bswi ) ),
-               aes_string( x = 'bswi_2022', y = '.fitted' ),
+    geom_line( data = fortify( lm( paste0(outcomes[[i]], '~ main_index'), data = bswi ) ),
+               aes_string( x = 'main_index', y = '.fitted' ),
                color = oxfam_colors[2],
                size = 1 ) +
-    geom_line( data = fortify( lm( paste0(outcomes[[i]], '~ bswi_2022 + eth_afram + eth_latinx + gov_share_gdp'), data = bswi ) ),
-               aes_string( x = 'bswi_2022', y = '.fitted' ),
+    geom_line( data = fortify( lm( paste0(outcomes[[i]], '~ main_index + eth_afram + eth_latinx'), data = bswi ) ),
+               aes_string( x = 'main_index', y = '.fitted' ),
                color = oxfam_colors[3] ) +
     
-    geom_text( aes_string( x = 'bswi_2022', y = outcomes[[i]], label = 'state_abbrev' ),
+    geom_text( aes_string( x = 'main_index', y = outcomes[[i]], label = 'state_abbrev' ),
                size = 2 ) +
     
     theme_minimal( ) +
@@ -198,3 +191,4 @@ while ( i <= length(outcomes) ) {
   i = i + 1
   
 }; rm( i )
+
